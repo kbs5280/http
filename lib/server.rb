@@ -1,5 +1,6 @@
 require 'socket'
 require 'pry'
+require_relative 'diagnostics'
 
 class Server
   attr_reader :client, :marker
@@ -17,8 +18,7 @@ class Server
       request_lines << line.chomp
     end
     got_request(request_lines)
-    # send_request(request_lines)
-    sending_response(request_lines)
+    request_lines
   end
 
   def got_request(request_lines)
@@ -26,15 +26,9 @@ class Server
     puts request_lines.inspect
   end
 
-  # def send_request(request_lines)
-  #   Diagnostics.new(request_lines)
-  # end
-
-# here we need to input the new output from diagnostics
-
-  def sending_response(request_lines)
+  def sending_response(response)
     puts "Sending response."
-    response = "<pre>" + request_lines.join("\n") + "</pre>"
+    response = "<pre>" + "\n#{response}\n" + "</pre>"
     output = "<html><head></head><body>#{response} Hello World! (#{@marker})
               </body></html>"
     headers = ["http/1.1 200 ok",
