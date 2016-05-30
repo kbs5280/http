@@ -3,7 +3,7 @@ require 'pry'
 require_relative 'diagnostics'
 
 class Server
-  attr_reader :client, :marker
+  attr_reader :client, :marker, :request_lines
 
   def initialize(port)
     tcp_server = TCPServer.new(port)
@@ -18,12 +18,18 @@ class Server
       request_lines << line.chomp
     end
     got_request(request_lines)
-    request_lines
+    diagnostics(request_lines)
   end
 
   def got_request(request_lines)
     puts "Got this request:"
     puts request_lines.inspect
+  end
+
+  def diagnostics(request_lines)
+    diagnostics = Diagnostics.new(request_lines)
+    diagnostics.start
+    sending_response(diagnostics.print_output)
   end
 
   def sending_response(response)
