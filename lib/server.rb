@@ -17,6 +17,7 @@ class Server
       request_lines << line.chomp
     end
     got_request(request_lines)
+    # send_request(request_lines)
     sending_response(request_lines)
   end
 
@@ -24,6 +25,12 @@ class Server
     puts "Got this request:"
     puts request_lines.inspect
   end
+
+  # def send_request(request_lines)
+  #   Diagnostics.new(request_lines)
+  # end
+
+# here we need to input the new output from diagnostics
 
   def sending_response(request_lines)
     puts "Sending response."
