@@ -1,5 +1,7 @@
 require_relative 'server'
 
+#MAY BE ABLE TO GET RID OF THE diagnostic_output METHOD
+
 class Diagnostics
   attr_reader :request_lines, :output
 
@@ -16,6 +18,7 @@ class Diagnostics
     port
     origin
     accept
+    diagnostic_output
   end
 
   def verb
@@ -46,7 +49,7 @@ class Diagnostics
     output["Accept:"] = request_lines[6].split[1]
   end
 
-  def print_output
+  def diagnostic_output
     output.map { |key, value| "#{key} #{value}"}.join("\n")
   end
 

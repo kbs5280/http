@@ -1,6 +1,7 @@
 require 'socket'
 require 'pry'
 require_relative 'diagnostics'
+require_relative 'response'
 
 class Server
   attr_reader :client, :marker, :request_lines
@@ -23,13 +24,13 @@ class Server
 
   def got_request(request_lines)
     puts "Got this request:"
-    puts request_lines.inspect
+    puts request_lines
   end
 
   def diagnostics(request_lines)
     diagnostics = Diagnostics.new(request_lines)
     diagnostics.start
-    sending_response(diagnostics.print_output)
+    Response.new(diagnostics.output)
   end
 
   def sending_response(response)
@@ -50,7 +51,7 @@ class Server
   end
 
   def close
-    client.close
+    client.close #EXIT yo
     puts "\nResponse complete, exiting."
   end
 

@@ -63,7 +63,7 @@ class DiagnosticsTest < Minitest::Test
     diagnostics.verb
     diagnostics.path
     diagnostics.protocol
-    assert_equal "Verb: GET\nPath: /\nProtocol: HTTP/1.1", diagnostics.print_output
+    assert_equal "Verb: GET\nPath: /\nProtocol: HTTP/1.1", diagnostics.diagnostic_output
   end
 
 end
