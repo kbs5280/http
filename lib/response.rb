@@ -1,75 +1,46 @@
 require_relative 'diagnostics'
+require_relative 'server'
 
 class Response
-  attr_reader :input, :paths, :marker
+  attr_reader :input, :paths, :hello_counter, :total_requests
 
-  def initialize(diagnostic_output)
-    @input = diagnostic_output
-    @marker = 0
+  def initialize
+    @hello_counter = 0
+    @total_requests = 0
   end
 
-  #need a method to run the methods
-
-  def path
-    input["Path:"]
+  def start(input)
+    direct_the_path(input["Path:"], input)
   end
 
-  def direct_the_path
+  def direct_the_path(path, input)
+    @total_requests += 1
     if path == "/"
-      send_path_response
+      path_response(input)
     elsif path == "/hello"
-      send_hello_response
+      @hello_counter += 1
+      hello_response(input)
     elsif path == "/datetime"
-      send_datetime_response
+      datetime_response(input)
     elsif path == "/shutdown"
-      send_shutdown_response
+      shutdown_response(input)
     end
   end
 
-  def send_path_response
+  def path_response(input)
     input.map { |key, value| "#{key} #{value}"}.join("\n")
   end
 
-  def send_hello_response
-    puts "Hello, World! (#{marker})"
-    @marker += 1
-    12
+  def hello_response(input)
+    "Hello, World! (#{hello_counter})"
   end
 
-  def send_datetime_response
+  def datetime_response(input)
     Time.now.strftime('%I:%M%p on %A, %B %e, %Y')
   end
 
-  def send_shutdown_response
-    # this method needs to call server.shutdown
-    100
+  def shutdown_response(input)
+    "Total requests: #{total_requests}"
   end
 
 end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def takes url and returns the path
-#   #this method will return path
-# end
-#
-# def something(path)
-#   # if the path == / then call the sending_root_response_method
-#   # if the past == /hello then print "hello world" and increment counter
-#   # if the /date and time then give them the date and Time
-#   # if shutdown then shutdown and give total count
-#   # else prints everything
-# end

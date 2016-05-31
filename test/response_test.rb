@@ -11,45 +11,50 @@ class ResponseTest < Minitest::Test
     @input_shutdown = ({"Verb:"=>"GET", "Path:"=>"/shutdown"})
   end
 
-  def test_it_exists
-    response = Response.new(input_path)
-    assert_instance_of Response, response
+  # def test_it_exists
+  #   response = Response.new(input_path)
+  #   assert_instance_of Response, response
+  # end
+  #
+  # def test_it_gets_the_diagnostic_output
+  #   response = Response.new(input_path)
+  #   assert_equal ({"Verb:"=>"GET", "Path:"=>"/", "Protocol:"=>"HTTP/1.1", "Host:"=>"localhost", "Port:"=>"9292", "Origin:"=>"localhost", "Accept:"=>"*/*"}), response.input
+  # end
+  #
+  # def test_it_can_find_the_path
+  #   response = Response.new(input_path)
+  #   assert_equal "/", response.path
+  # end
+  #
+  # def test_it_can_send_path_response
+  #   response = Response.new(input_path)
+  #   response.path
+  #   assert_equal "Verb: GET\nPath: /\nProtocol: HTTP/1.1\nHost: localhost\nPort: 9292\nOrigin: localhost\nAccept: */*", response.direct_the_path
+  # end
+
+  def test_it_can_send_hello_response
+    response = Response.new
+    response.start(input_hello)
+    assert_equal "Hello, World! (1)", response.direct_the_path("/hello", input_hello)
   end
 
-  def test_it_gets_the_diagnostic_output
-    response = Response.new(input_path)
-    assert_equal ({"Verb:"=>"GET", "Path:"=>"/", "Protocol:"=>"HTTP/1.1", "Host:"=>"localhost", "Port:"=>"9292", "Origin:"=>"localhost", "Accept:"=>"*/*"}), response.input
+  def test_it_can_send_shutdown_response
+    response = Response.new
+    response.start(input_hello)
+    assert_equal "\nResponse complete, exiting.", response.direct_the_path("/shutdown", input_shutdown)
   end
 
-  def test_it_can_find_the_path
-    response = Response.new(input_path)
-    assert_equal "/", response.path
-  end
-
-  def test_it_can_send_path_response
-    response = Response.new(input_path)
-    response.path
-    assert_equal "Verb: GET\nPath: /\nProtocol: HTTP/1.1\nHost: localhost\nPort: 9292\nOrigin: localhost\nAccept: */*", response.direct_the_path
-  end
-
-  def test_it_can_send_hello_response #TEST WITH FARADAY - currently set to return 12
-    skip
-    response = Response.new(input_hello)
-    response.path
-    assert_equal 12, response.direct_the_path
-  end
-
-  def test_it_can_send_datetime_response #NEED TO TEST TIME
-    skip
-    response = Response.new(input_datetime)
-    response.path
-    assert_equal "time", response.direct_the_path
-  end
-
-  def test_it_can_send_shutdown_response #NEED TO SHUTDOWN !!! BUT not TEST shutdown!!!
-    response = Response.new(input_shutdown)
-    response.path
-    assert_equal 100, response.direct_the_path
-  end
+  # def test_it_can_send_datetime_response #NEED TO TEST TIME
+  #   skip
+  #   response = Response.new(input_datetime)
+  #   response.path
+  #   assert_equal "time", response.direct_the_path
+  # end
+  #
+  # def test_it_can_send_shutdown_response #NEED TO SHUTDOWN !!! BUT not TEST shutdown!!!
+  #   response = Response.new(input_shutdown)
+  #   response.path
+  #   assert_equal 100, response.direct_the_path
+  # end
 
 end

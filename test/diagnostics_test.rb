@@ -59,11 +59,11 @@ class DiagnosticsTest < Minitest::Test
     assert_equal ({"Verb:"=>"GET", "Path:"=>"/", "Protocol:"=>"HTTP/1.1"}), diagnostics.output
   end
 
-  def test_it_can_print_the_ouput_pairs
-    diagnostics.verb
-    diagnostics.path
-    diagnostics.protocol
-    assert_equal "Verb: GET\nPath: /\nProtocol: HTTP/1.1", diagnostics.diagnostic_output
-  end
+  # def test_it_can_print_the_ouput_pairs
+  #   diagnostics.verb
+  #   diagnostics.path
+  #   diagnostics.protocol
+  #   assert_equal "Verb: GET\nPath: /\nProtocol: HTTP/1.1", diagnostics.diagnostic_output
+  # end
 
 end
