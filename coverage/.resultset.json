@@ -1,7 +1,7 @@
 {
   "Unit Tests": {
     "coverage": {
-      "/Users/ksparks/turing/mod_1/projects/http/lib/response.rb": [
+      "/Users/garrett.smestad/turing/Projects/http/lib/response.rb": [
         1,
         1,
         1,
@@ -54,19 +54,15 @@
         1,
         1,
         1,
-        null,
-        1,
-        1,
-        1,
-        null,
         0,
         null,
+        1,
         null,
         null,
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/http/lib/diagnostics.rb": [
+      "/Users/garrett.smestad/turing/Projects/http/lib/diagnostics.rb": [
         1,
         null,
         null,
@@ -133,7 +129,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/http/lib/server.rb": [
+      "/Users/garrett.smestad/turing/Projects/http/lib/server.rb": [
         1,
         1,
         1,
@@ -190,7 +186,7 @@
         null,
         null
       ],
-      "/Users/ksparks/turing/mod_1/projects/http/lib/dictionary.rb": [
+      "/Users/garrett.smestad/turing/Projects/http/lib/dictionary.rb": [
         1,
         1,
         null,
@@ -201,7 +197,7 @@
         null
       ]
     },
-    "timestamp": 1464744782
+    "timestamp": 1464751747
   },
   "MiniTest": {
     "coverage": {

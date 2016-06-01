@@ -57,7 +57,7 @@ class ResponseTest < Minitest::Test
   #   assert_equal 100, response.direct_the_path
   # end
 
-  def test_it_find_the_word_in_the_dictionary
+  def test_it_can_find_the_word_in_the_dictionary
     response = Response.new
     assert_equal "pizza", response.word_search({"Param Value:" => "xxxxxxxx"})
   end

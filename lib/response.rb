@@ -47,17 +47,13 @@ class Response
     "Total requests: #{total_requests}"
   end
 
-  # def word_search(input)
-  #   word = input["Param Value:"]
-  #   dictionary.words.detect do |lexicon|
-  #     # binding.pry
-  #     if word
-  #       puts "#{word} is a known word"
-  #       exit
-  #     else
-  #       puts "#{word} is not a known word"
-  #     end
-  #   end
-  # end
+  def word_search(input)
+    word = input["Param Value:"]
+    if dictionary.words.include?(word)
+      "#{word} is a known word"
+    else
+      "#{word} is not a known word"
+    end
+  end
 
 end
