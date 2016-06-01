@@ -24,7 +24,7 @@ class Parser
   end
 
   def path
-	   request_lines[0].split[1].split("?")[0]
+   request_lines[0].split[1].split("?")[0]
   end
 
   def param_name
@@ -44,19 +44,23 @@ class Parser
   end
 
   def host
-    request_lines[1].split(":")[1].strip
+    host = request_lines.detect { |line| line.include?("Host") }
+    host.split(":")[1].strip
   end
 
   def port
-    request_lines[1].split(":")[2]
+    port = request_lines.detect { |line| line.include?("Host") }
+    port.split(":")[2].strip
   end
 
   def origin
-    request_lines[1].split(":")[1].strip
+    origin = request_lines.detect { |line| line.include?("Host") }
+    origin.split(":")[1].strip
   end
 
   def accept
-    request_lines[6].split[1]
+    accept = request_lines.detect { |line| line.include?("Accept:") }
+    accept.split(":")[1].strip
   end
 
 end
