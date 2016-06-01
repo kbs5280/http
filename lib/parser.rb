@@ -2,14 +2,14 @@ require_relative 'server'
 
 #MAY BE ABLE TO GET RID OF THE diagnostic_output METHOD
 
-class Diagnostics
+class Parser
   attr_reader :request_lines, :output
 
   def initialize
     @output = {}
   end
 
-  def start(request_lines)
+  def parse_request(request_lines)
     verb(request_lines)
     path(request_lines)
     param_name(request_lines)

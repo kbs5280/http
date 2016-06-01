@@ -1,4 +1,4 @@
-require_relative 'diagnostics'
+require_relative 'parser'
 require_relative 'server'
 require_relative 'dictionary'
 

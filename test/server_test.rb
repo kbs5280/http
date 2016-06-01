@@ -11,7 +11,5 @@ class ServerTest < Minitest::Test
     assert response.success?
   end
 
-  # takes a request and returns a string
-  # takes a request 
 
 end

@@ -1,16 +1,15 @@
 require 'socket'
 require 'pry'
-require_relative 'diagnostics'
+require_relative 'parser'
 require_relative 'response'
 
 class Server
-  attr_reader :client, :diagnostics, :response
-  attr_accessor :running
+  attr_reader :client, :parser, :response, :running
 
   def initialize(port)
     tcp_server = TCPServer.new(port)
     @client = tcp_server.accept
-    @diagnostics = Diagnostics.new
+    @parser = Parser.new
     @response = Response.new
     @running = true
   end
@@ -23,8 +22,7 @@ class Server
         request_lines << line.chomp
       end
       got_request(request_lines)
-      #need to change diagnostics class to parser 
-      parser_output = diagnostics.start(request_lines)
+      parser_output = parser.parse_request(request_lines)
       output_to_client = response.output(parser_output)
       sending_response(output_to_client)
     end
