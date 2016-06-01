@@ -28,6 +28,7 @@ class Response
     return datetime_response(input)  if path == "/datetime"
     return shutdown_response(input)  if path == "/shutdown"
     return word_search(input)        if path == "/word_search"
+    return game_response(input)      if path == "/start_game"
   end
 
   def path_response(input)
@@ -50,6 +51,10 @@ class Response
     word = input["Param Value:"].to_s.downcase
     known_word = dictionary.words.include?(word)
     known_word ? "#{word} is a known word" : "#{word} is not a known word"
+  end
+
+  def game_response(input)
+    "Good luck!"
   end
 
 end

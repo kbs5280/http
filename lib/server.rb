@@ -2,6 +2,7 @@ require 'socket'
 require 'pry'
 require_relative 'parser'
 require_relative 'response'
+require_relative 'game'
 
 class Server
   attr_reader :client, :parser, :response, :running
@@ -12,6 +13,8 @@ class Server
     @response = Response.new
     @running = true
   end
+
+  puts "Ready for a request"
 
   def ready_for_request
     while running do
