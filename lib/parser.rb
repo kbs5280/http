@@ -1,30 +1,22 @@
 require_relative 'server'
 
 class Parser
-  attr_reader :request_lines #, :output
+  attr_reader :request_lines
 
   def initialize(request_lines)
     @request_lines = request_lines
-    # @output = {}
   end
-  #
-  # def parse_request(request_lines)
-  #   verb(request_lines)
-  #   path(request_lines)
-  #   param_name(request_lines)
-  #   param_value(request_lines)
-  #   protocol(request_lines)
-  #   host(request_lines)
-  #   port(request_lines)
-  #   origin(request_lines)
-  #   accept(request_lines)
-  #   output
-  # end
 
   def parser_output
-    { "Verb:"=>verb, "Path:"=>path, "Param Name:"=>param_name,
-      "Param Value:"=>param_value, "Protocol:"=>protocol, "Host:"=>host,
-      "Port:"=>port, "Origin:"=> origin, "Accept:"=>accept }
+    { "Verb:"=>verb,
+      "Path:"=>path,
+      "Param Name:"=>param_name,
+      "Param Value:"=>param_value,
+      "Protocol:"=>protocol,
+      "Host:"=>host,
+      "Port:"=>port,
+      "Origin:"=> origin,
+      "Accept:"=>accept }
   end
 
   def verb

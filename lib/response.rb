@@ -47,7 +47,7 @@ class Response
   end
 
   def word_search(input)
-    word = input["Param Value:"].downcase
+    word = input["Param Value:"].to_s.downcase
     known_word = dictionary.words.include?(word)
     known_word ? "#{word} is a known word" : "#{word} is not a known word"
   end

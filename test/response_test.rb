@@ -77,4 +77,10 @@ class ResponseTest < Minitest::Test
     assert_equal "x..!.ii is not a known word", response.word_search(input)
   end
 
+  def test_it_can_get_an_incorrect_word_search_response_with_gibberish
+    input = {"Param Value:" => ""}
+
+    assert_equal " is not a known word", response.word_search(input)
+  end
+
 end
