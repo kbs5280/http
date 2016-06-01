@@ -19,13 +19,16 @@ class Game
   def check_guess
     return "No guesses made" if @guesses.empty?
 
-    case @guesses.last <=> answer
-    when -1
-      return "Too low"
-    when 0
-      return "Correct!"
-    when 1
-      return "Too high"
+    if @guesses.last > 100 || @guesses.last < 0
+      "Please enter a number between 0 and 100"
+    elsif @guesses.last < answer
+      "Too low"
+    elsif @guesses.last == answer
+      "Correct!"
+    elsif @guesses.last > answer
+      "Too high"
+    else
+      "Keep trying"
     end
   end
 
