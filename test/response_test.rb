@@ -31,18 +31,18 @@ class ResponseTest < Minitest::Test
   #   response.path
   #   assert_equal "Verb: GET\nPath: /\nProtocol: HTTP/1.1\nHost: localhost\nPort: 9292\nOrigin: localhost\nAccept: */*", response.direct_the_path
   # end
-
-  def test_it_can_send_hello_response
-    response = Response.new
-    response.start(input_hello)
-    assert_equal "Hello, World! (1)", response.direct_the_path("/hello", input_hello)
-  end
-
-  def test_it_can_send_shutdown_response
-    response = Response.new
-    response.start(input_hello)
-    assert_equal "\nResponse complete, exiting.", response.direct_the_path("/shutdown", input_shutdown)
-  end
+  #
+  # def test_it_can_send_hello_response
+  #   response = Response.new
+  #   response.start(input_hello)
+  #   assert_equal "Hello, World! (1)", response.direct_the_path("/hello", input_hello)
+  # end
+  #
+  # def test_it_can_send_shutdown_response
+  #   response = Response.new
+  #   response.start(input_hello)
+  #   assert_equal "\nResponse complete, exiting.", response.direct_the_path("/shutdown", input_shutdown)
+  # end
 
   # def test_it_can_send_datetime_response #NEED TO TEST TIME
   #   skip
@@ -55,6 +55,16 @@ class ResponseTest < Minitest::Test
   #   response = Response.new(input_shutdown)
   #   response.path
   #   assert_equal 100, response.direct_the_path
+  # end
+
+  def test_it_find_the_word_in_the_dictionary
+    response = Response.new
+    assert_equal "pizza", response.word_search({"Param Value:" => "xxxxxxxx"})
+  end
+
+  # def test_it_reads_the_dictionary
+  #   response = Response.new
+  #   assert_equal "", response.dictionary
   # end
 
 end

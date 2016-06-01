@@ -12,12 +12,13 @@ class Diagnostics
   def start(request_lines)
     verb(request_lines)
     path(request_lines)
+    param_name(request_lines)
+    param_value(request_lines)
     protocol(request_lines)
     host(request_lines)
     port(request_lines)
     origin(request_lines)
     accept(request_lines)
-    #diagnostic_output
     output
   end
 
@@ -26,7 +27,19 @@ class Diagnostics
   end
 
   def path(request_lines)
-    output["Path:"] = request_lines[0].split[1]
+	   output["Path:"] = request_lines[0].split[1].split("?")[0]
+  end
+
+  def param_name(request_lines)
+      if request_lines[0].include?("?")
+      output["Param Name:"] = request_lines[0].split[1].split("?")[1].split("=")[0]
+    end
+  end
+
+  def param_value(request_lines)
+      if request_lines[0].include?("?")
+  	  output["Param Value:"] = request_lines[0].split[1].split("?")[1].split("=")[1]
+    end
   end
 
   def protocol(request_lines)
@@ -48,11 +61,5 @@ class Diagnostics
   def accept(request_lines)
     output["Accept:"] = request_lines[6].split[1]
   end
-
-  # def diagnostic_output
-  #   # output.map { |key, value| "#{key} #{value}"}.join("\n")
-  #   response = Response.new(output)
-  #   response.start
-  # end
 
 end

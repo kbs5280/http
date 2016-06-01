@@ -1,10 +1,12 @@
 require_relative 'diagnostics'
 require_relative 'server'
+require_relative 'dictionary'
 
 class Response
-  attr_reader :input, :paths, :hello_counter, :total_requests
+  attr_reader :input, :paths, :hello_counter, :total_requests, :dictionary
 
   def initialize
+    @dictionary = Dictionary.new
     @hello_counter = 0
     @total_requests = 0
   end
@@ -24,6 +26,8 @@ class Response
       datetime_response(input)
     elsif path == "/shutdown"
       shutdown_response(input)
+    elsif path == "/word_search"
+      word_search(input)
     end
   end
 
@@ -42,5 +46,18 @@ class Response
   def shutdown_response(input)
     "Total requests: #{total_requests}"
   end
+
+  # def word_search(input)
+  #   word = input["Param Value:"]
+  #   dictionary.words.detect do |lexicon|
+  #     # binding.pry
+  #     if word
+  #       puts "#{word} is a known word"
+  #       exit
+  #     else
+  #       puts "#{word} is not a known word"
+  #     end
+  #   end
+  # end
 
 end
