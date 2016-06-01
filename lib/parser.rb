@@ -1,65 +1,70 @@
 require_relative 'server'
 
-#MAY BE ABLE TO GET RID OF THE diagnostic_output METHOD
-
 class Parser
-  attr_reader :request_lines, :output
+  attr_reader :request_lines #, :output
 
-  def initialize
-    @output = {}
+  def initialize(request_lines)
+    @request_lines = request_lines
+    # @output = {}
+  end
+  #
+  # def parse_request(request_lines)
+  #   verb(request_lines)
+  #   path(request_lines)
+  #   param_name(request_lines)
+  #   param_value(request_lines)
+  #   protocol(request_lines)
+  #   host(request_lines)
+  #   port(request_lines)
+  #   origin(request_lines)
+  #   accept(request_lines)
+  #   output
+  # end
+
+  def parser_output
+    { "Verb:"=>verb, "Path:"=>path, "Param Name:"=>param_name,
+      "Param Value:"=>param_value, "Protocol:"=>protocol, "Host:"=>host,
+      "Port:"=>port, "Origin:"=> origin, "Accept:"=>accept }
   end
 
-  def parse_request(request_lines)
-    verb(request_lines)
-    path(request_lines)
-    param_name(request_lines)
-    param_value(request_lines)
-    protocol(request_lines)
-    host(request_lines)
-    port(request_lines)
-    origin(request_lines)
-    accept(request_lines)
-    output
+  def verb
+    request_lines[0].split[0]
   end
 
-  def verb(request_lines)
-    output["Verb:"] = request_lines[0].split[0]
+  def path
+	   request_lines[0].split[1].split("?")[0]
   end
 
-  def path(request_lines)
-	   output["Path:"] = request_lines[0].split[1].split("?")[0]
-  end
-
-  def param_name(request_lines)
-      if request_lines[0].include?("?")
-      output["Param Name:"] = request_lines[0].split[1].split("?")[1].split("=")[0]
+  def param_name
+    if request_lines[0].include?("?")
+      request_lines[0].split[1].split("?")[1].split("=")[0]
     end
   end
 
-  def param_value(request_lines)
-      if request_lines[0].include?("?")
-  	  output["Param Value:"] = request_lines[0].split[1].split("?")[1].split("=")[1]
+  def param_value
+    if request_lines[0].include?("?")
+  	  request_lines[0].split[1].split("?")[1].split("=")[1]
     end
   end
 
-  def protocol(request_lines)
-    output["Protocol:"] = request_lines[0].split[2]
+  def protocol
+    request_lines[0].split[2]
   end
 
-  def host(request_lines)
-    output["Host:"] = request_lines[1].split(":")[1].strip
+  def host
+    request_lines[1].split(":")[1].strip
   end
 
-  def port(request_lines)
-    output["Port:"] = request_lines[1].split(":")[2]
+  def port
+    request_lines[1].split(":")[2]
   end
 
-  def origin(request_lines)
-    output["Origin:"] = request_lines[1].split(":")[1].strip
+  def origin
+    request_lines[1].split(":")[1].strip
   end
 
-  def accept(request_lines)
-    output["Accept:"] = request_lines[6].split[1]
+  def accept
+    request_lines[6].split[1]
   end
 
 end

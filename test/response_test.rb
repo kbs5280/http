@@ -13,34 +13,68 @@ class ResponseTest < Minitest::Test
   end
 
   def test_it_can_get_path_response
+    input = ({"Verb:"=>"GET", "Path:"=>"/", "Protocol:"=>"HTTP/1.1", "Host:"=>"localhost", "Port:"=>"9292", "Origin:"=>"localhost", "Accept:"=>"*/*"})
+
     expected = "Verb: GET\nPath: /\nProtocol: HTTP/1.1\nHost: localhost\nPort: 9292\nOrigin: localhost\nAccept: */*"
-    input_path = ({"Verb:"=>"GET", "Path:"=>"/", "Protocol:"=>"HTTP/1.1", "Host:"=>"localhost", "Port:"=>"9292", "Origin:"=>"localhost", "Accept:"=>"*/*"})
-    assert_equal expected, response.output(input_path)
+
+    assert_equal expected, response.response_generator(input)
   end
 
   def test_it_can_get_hello_response
+    input = ({"Verb:"=>"GET", "Path:"=>"/hello"})
+
     expected = "Hello, World! (1)"
-    input_hello = ({"Verb:"=>"GET", "Path:"=>"/hello"})
-    assert_equal expected, response.output(input_hello)
+
+    assert_equal expected, response.response_generator(input)
   end
 
   def test_it_can_get_shutdown_response
+    input = ({"Verb:"=>"GET", "Path:"=>"/shutdown"})
+
     expected_1 = "Total requests: 1"
     expected_2 = "Total requests: 2"
-    input_shutdown = ({"Verb:"=>"GET", "Path:"=>"/shutdown"})
-    assert_equal expected_1, response.output(input_shutdown)
-    assert_equal expected_2, response.output(input_shutdown)
+
+    assert_equal expected_1, response.response_generator(input)
+    assert_equal expected_2, response.response_generator(input)
   end
 
-  # def test_it_can_send_datetime_response #NEED TO TEST TIME
-  #   skip
-  #   input_datetime = ({"Verb:"=>"GET", "Path:"=>"/datetime"})
-  #   expected = date&time
-  #   assert_equal expected, response.output(input_datetime)
-  # end
+  def test_it_can_send_datetime_response #NEED TO TEST TIME
+    skip
+    input = ({"Verb:"=>"GET", "Path:"=>"/datetime"})
 
-  def test_it_can_get_word_search_response
-    assert_equal "Pizza is a known word", response.word_search({"Param Value:" => "pizza"})
+    expected = date&time
+
+    assert_equal expected, response.response_generator(input)
+  end
+
+  def test_it_can_get_a_correct_word_search_response
+    input = {"Param Value:" => "pizza"}
+
+    assert_equal "pizza is a known word", response.word_search(input)
+  end
+
+  def test_it_can_get_a_correct_word_search_response_with_capital_letters
+    input = {"Param Value:" => "PIZZA"}
+
+    assert_equal "pizza is a known word", response.word_search(input)
+  end
+
+  def test_it_can_get_an_incorrect_word_search_response
+    input = {"Param Value:" => "alot"}
+
+    assert_equal "alot is not a known word", response.word_search(input)
+  end
+
+  def test_it_can_get_an_incorrect_word_search_response_with_fragment
+    input = {"Param Value:" => "pizzz"}
+
+    assert_equal "pizzz is not a known word", response.word_search(input)
+  end
+
+  def test_it_can_get_an_incorrect_word_search_response_with_gibberish
+    input = {"Param Value:" => "x..!.iI"}
+
+    assert_equal "x..!.ii is not a known word", response.word_search(input)
   end
 
 end

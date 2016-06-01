@@ -11,5 +11,12 @@ class ServerTest < Minitest::Test
     assert response.success?
   end
 
+  def test_hello_world
+    response = Faraday.getFaraday.get("http://127.0.0.1:9292")
+    assert response.body.include?("Hello World!")
+  end
+
+  
+
 
 end

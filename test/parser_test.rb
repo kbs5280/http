@@ -5,7 +5,6 @@ class DiagnosticsTest < Minitest::Test
   attr_reader :parser, :request_lines, :request_word
 
   def setup
-    @parser = Parser.new
     @request_lines = (["GET / HTTP/1.1",
                        "Host: localhost:9292",
                        "Connection: keep-alive",
@@ -27,59 +26,80 @@ class DiagnosticsTest < Minitest::Test
   end
 
   def test_it_exist
+    parser = Parser.new(request_lines)
+
     assert_instance_of Parser, parser
   end
 
   def test_it_gets_the_verb
-    assert_equal "GET", parser.verb(request_lines)
+    parser = Parser.new(request_lines)
+
+    assert_equal "GET", parser.verb
   end
 
   def test_it_gets_the_path
-    assert_equal "/", parser.path(request_lines)
-    assert_equal "/word_search", parser.path(request_word)
+    parser = Parser.new(request_lines)
+    parser_2 = Parser.new(request_word)
+
+    assert_equal "/", parser.path
+    assert_equal "/word_search", parser_2.path
   end
 
   def test_it_gets_the_param_name
-    assert_equal "word", parser.param_name(request_word)
-    assert_equal nil, parser.param_name(request_lines)
+    parser = Parser.new(request_lines)
+    parser_2 = Parser.new(request_word)
+
+    assert_equal nil, parser.param_name
+    assert_equal "word", parser_2.param_name
   end
 
   def test_it_gets_the_param_value
-    assert_equal "pizza", parser.param_value(request_word)
-    assert_equal nil, parser.param_value(request_lines)
+    parser = Parser.new(request_lines)
+    parser_2 = Parser.new(request_word)
+
+    assert_equal nil, parser.param_value
+    assert_equal "pizza", parser_2.param_value
   end
 
   def test_it_gets_the_protocol
-    assert_equal "HTTP/1.1", parser.protocol(request_lines)
+    parser = Parser.new(request_lines)
+
+    assert_equal "HTTP/1.1", parser.protocol
   end
 
   def test_it_gets_the_host
-    assert_equal "localhost", parser.host(request_lines)
+    parser = Parser.new(request_lines)
+
+    assert_equal "localhost", parser.host
   end
 
   def test_it_gets_the_port
-    assert_equal "9292", parser.port(request_lines)
+    parser = Parser.new(request_lines)
+
+    assert_equal "9292", parser.port
   end
 
   def test_it_gets_the_origin
-    assert_equal "localhost", parser.origin(request_lines)
+    parser = Parser.new(request_lines)
+
+    assert_equal "localhost", parser.origin
   end
 
   def test_it_gets_the_accept
-    assert_equal "*/*", parser.accept(request_lines)
+    parser = Parser.new(request_lines)
+
+    assert_equal "*/*", parser.accept
   end
 
-  def test_it_can_coallate_the_output
-    parser.verb(request_lines)
-    parser.path(request_lines)
-    parser.protocol(request_lines)
-    assert_equal ({"Verb:"=>"GET", "Path:"=>"/", "Protocol:"=>"HTTP/1.1"}), parser.output
+  def test_it_can_call_methods_via_output_hash
+    parser = Parser.new(request_lines)
+    parser_2 = Parser.new(request_word)
+
+    expected = ({"Verb:"=>"GET", "Path:"=>"/", "Param Name:"=>nil, "Param Value:"=>nil, "Protocol:"=>"HTTP/1.1", "Host:"=>"localhost", "Port:"=>"9292", "Origin:"=>"localhost", "Accept:"=>"*/*"})
+    expected_2 = ({"Verb:"=>"GET", "Path:"=>"/word_search", "Param Name:"=>"word", "Param Value:"=>"pizza", "Protocol:"=>"HTTP/1.1", "Host:"=>"localhost", "Port:"=>"9292", "Origin:"=>"localhost", "Accept:"=>"*/*"})
+    
+    assert_equal expected, parser.parser_output
+    assert_equal expected_2, parser_2.parser_output
   end
 
-  def test_it_can_generate_the_compete_output
-    parser.parse_request(request_word)
-    expected = {"Verb:"=>"GET", "Path:"=>"/word_search", "Param Name:"=>"word", "Param Value:"=>"pizza", "Protocol:"=>"HTTP/1.1", "Host:"=>"localhost", "Port:"=>"9292", "Origin:"=>"localhost", "Accept:"=>"*/*"}
-    assert_equal expected, parser.output
-  end
-  
 end

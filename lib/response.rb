@@ -11,24 +11,23 @@ class Response
     @total_requests = 0
   end
 
-  def output(input)
-    direct_the_path(input["Path:"], input)
+  def response_generator(input)
+    path = input["Path:"]
+    counter_manager(path)
+    path_router(path, input)
   end
 
-  def direct_the_path(path, input)
+  def counter_manager(path)
     @total_requests += 1
-    if path == "/"
-      path_response(input)
-    elsif path == "/hello"
-      @hello_counter += 1
-      hello_response(input)
-    elsif path == "/datetime"
-      datetime_response(input)
-    elsif path == "/shutdown"
-      shutdown_response(input)
-    elsif path == "/word_search"
-      word_search(input)
-    end
+    @hello_counter += 1              if path == "/hello"
+  end
+
+  def path_router(path, input)
+    return path_response(input)      if path == "/"
+    return hello_response(input)     if path == "/hello"
+    return datetime_response(input)  if path == "/datetime"
+    return shutdown_response(input)  if path == "/shutdown"
+    return word_search(input)        if path == "/word_search"
   end
 
   def path_response(input)
@@ -48,12 +47,9 @@ class Response
   end
 
   def word_search(input)
-    word = input["Param Value:"]
-    if dictionary.words.include?(word)
-      "#{word.capitalize} is a known word"
-    else
-      "#{word.capitalize} is not a known word"
-    end
+    word = input["Param Value:"].downcase
+    known_word = dictionary.words.include?(word)
+    known_word ? "#{word} is a known word" : "#{word} is not a known word"
   end
 
 end

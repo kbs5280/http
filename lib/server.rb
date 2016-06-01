@@ -9,7 +9,6 @@ class Server
   def initialize(port)
     tcp_server = TCPServer.new(port)
     @client = tcp_server.accept
-    @parser = Parser.new
     @response = Response.new
     @running = true
   end
@@ -22,8 +21,9 @@ class Server
         request_lines << line.chomp
       end
       got_request(request_lines)
-      parser_output = parser.parse_request(request_lines)
-      output_to_client = response.output(parser_output)
+      parser = Parser.new(request_lines)
+      parser_output = parser.parser_output
+      output_to_client = response.response_generator(parser_output)
       sending_response(output_to_client)
     end
     exit
