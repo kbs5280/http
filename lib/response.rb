@@ -11,7 +11,7 @@ class Response
     @total_requests = 0
   end
 
-  def start(input)
+  def output(input)
     direct_the_path(input["Path:"], input)
   end
 
@@ -50,9 +50,9 @@ class Response
   def word_search(input)
     word = input["Param Value:"]
     if dictionary.words.include?(word)
-      "#{word} is a known word"
+      "#{word.capitalize} is a known word"
     else
-      "#{word} is not a known word"
+      "#{word.capitalize} is not a known word"
     end
   end
 

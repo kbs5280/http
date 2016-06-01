@@ -23,8 +23,9 @@ class Server
         request_lines << line.chomp
       end
       got_request(request_lines)
-      output = diagnostics.start(request_lines)
-      output_to_client = response.start(output)
+      #need to change diagnostics class to parser 
+      parser_output = diagnostics.start(request_lines)
+      output_to_client = response.output(parser_output)
       sending_response(output_to_client)
     end
     exit
