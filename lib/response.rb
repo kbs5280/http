@@ -35,7 +35,8 @@ class Response
   end
 
   def path_response(input)
-    input.map { |key, value| "#{key} #{value}"}.join("\n")
+    condensed = input.delete_if { |key, value| key == "Param Name:" || key == "Param Value:" || key == "Content Length:" }
+    condensed.map { |key, value| "#{key} #{value}"}.join("\n")
   end
 
   def hello_response(input)

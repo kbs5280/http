@@ -4,13 +4,14 @@ require_relative 'parser'
 require_relative 'response'
 
 class Server
-  attr_reader :client, :parser, :response, :running, :guess
+  attr_reader :client, :parser, :response, :running, :guess, :location
 
   def initialize
     tcp_server  = TCPServer.new(9292)
     @client     = tcp_server.accept
     @response   = Response.new
     @running  = true
+    @location = "Pizza"
   end
 
   def ready_for_request
@@ -43,6 +44,7 @@ class Server
   def headers(output)
     ["http/1.1 200 ok",
     "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}",
+    "location: #{location}"
     "server: ruby",
     "content-type: text/html; charset=iso-8859-1",
     "content-length: #{output.length}\r\n\r\n"].join("\r\n")
