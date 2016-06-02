@@ -7,11 +7,6 @@ class Game
     @guesses = []
   end
 
-  # def generate_random_number
-  #   number = Random.new
-  #   number.rand(100)
-  # end
-
   def store_guess(number)
     @guesses << number
   end

@@ -83,4 +83,12 @@ class ResponseTest < Minitest::Test
     assert_equal " is not a known word", response.word_search(input)
   end
 
+  def test_it_can_get_start_game_response
+    input = ({"Verb:"=>"POST", "Path:"=>"/start_game"})
+
+    expected = "Good luck!"
+
+    assert_equal expected, response.response_generator(input)
+  end
+
 end
