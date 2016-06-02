@@ -14,7 +14,6 @@ class ResponseTest < Minitest::Test
 
   def test_it_can_get_path_response
     input = ({"Verb:"=>"GET", "Path:"=>"/", "Protocol:"=>"HTTP/1.1", "Host:"=>"localhost", "Port:"=>"9292", "Origin:"=>"localhost", "Accept:"=>"*/*"})
-
     expected = "Verb: GET\nPath: /\nProtocol: HTTP/1.1\nHost: localhost\nPort: 9292\nOrigin: localhost\nAccept: */*"
 
     assert_equal expected, response.response_generator(input)
@@ -22,7 +21,6 @@ class ResponseTest < Minitest::Test
 
   def test_it_can_get_hello_response
     input = ({"Verb:"=>"GET", "Path:"=>"/hello"})
-
     expected = "Hello, World! (1)"
 
     assert_equal expected, response.response_generator(input)
@@ -30,7 +28,6 @@ class ResponseTest < Minitest::Test
 
   def test_it_can_get_shutdown_response
     input = ({"Verb:"=>"GET", "Path:"=>"/shutdown"})
-
     expected_1 = "Total requests: 1"
     expected_2 = "Total requests: 2"
 
@@ -41,7 +38,6 @@ class ResponseTest < Minitest::Test
   def test_it_can_send_datetime_response #NEED TO TEST TIME
     skip
     input = ({"Verb:"=>"GET", "Path:"=>"/datetime"})
-
     expected = date&time
 
     assert_equal expected, response.response_generator(input)
@@ -81,6 +77,33 @@ class ResponseTest < Minitest::Test
     input = {"Param Value:" => ""}
 
     assert_equal " is not a known word", response.word_search(input)
+  end
+
+  def test_it_can_start_game
+    input = ({"Verb:"=>"POST", "Path:"=>"/start_game"})
+    expected = "Good luck!"
+
+    assert_equal expected, response.start_game(input)
+  end
+
+  def test_it_gets_game_info
+    input = ({"Verb:"=>"POST", "Path:"=>"/start_game"})
+    input_2 = ({"Verb:"=>"GET", "Path:"=>"/game"})
+    expected = "Good luck!"
+    expected_2 = "No guesses have been made."
+
+    assert_equal expected, response.start_game(input)
+    assert_equal expected_2, response.response_generator(input_2)
+  end
+
+  def test_it_plays_game
+    input = ({"Verb:"=>"POST", "Path:"=>"/start_game"})
+    input_2 = ({"Verb:"=>"POST", "Path:"=>"/game", "Param Name:"=> "guess", "Param Value:"=>"42"})
+    expected = "Good luck!"
+    expected_2 = "Your guess was 42 and it was too high."
+
+    assert_equal expected, response.start_game(input)
+    assert_equal expected_2, response.response_generator(input_2)
   end
 
 end

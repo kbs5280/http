@@ -125,8 +125,8 @@ class DiagnosticsTest < Minitest::Test
     parser = Parser.new(request_lines)
     parser_2 = Parser.new(request_word)
 
-    expected = ({"Verb:"=>"GET", "Path:"=>"/", "Param Name:"=>nil, "Param Value:"=>nil, "Protocol:"=>"HTTP/1.1", "Host:"=>"127.0.0.1", "Port:"=>"9292", "Origin:"=>"127.0.0.1", "Accept:"=>"*/*"})
-    expected_2 = ({"Verb:"=>"GET", "Path:"=>"/word_search", "Param Name:"=>"word", "Param Value:"=>"pizza", "Protocol:"=>"HTTP/1.1", "Host:"=>"127.0.0.1", "Port:"=>"9292", "Origin:"=>"127.0.0.1", "Accept:"=>"*/*"})
+    expected = ({"Verb:"=>"GET", "Path:"=>"/", "Param Name:"=>nil, "Param Value:"=>nil, "Protocol:"=>"HTTP/1.1", "Host:"=>"127.0.0.1", "Port:"=>"9292", "Origin:"=>"127.0.0.1", "Accept:"=>"*/*", "Content Length:"=>nil})
+    expected_2 = ({"Verb:"=>"GET", "Path:"=>"/word_search", "Param Name:"=>"word", "Param Value:"=>"pizza", "Protocol:"=>"HTTP/1.1", "Host:"=>"127.0.0.1", "Port:"=>"9292", "Origin:"=>"127.0.0.1", "Accept:"=>"*/*", "Content Length:"=>nil})
 
     assert_equal expected, parser.parser_output
     assert_equal expected_2, parser_2.parser_output

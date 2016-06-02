@@ -8,6 +8,7 @@ class Parser
   end
 
   def parser_output
+    return "Invalid" if request_lines.empty?
     { "Verb:"=>verb,
       "Path:"=>path,
       "Param Name:"=>param_name,
@@ -16,15 +17,19 @@ class Parser
       "Host:"=>host,
       "Port:"=>port,
       "Origin:"=> origin,
-      "Accept:"=>accept }
+      "Accept:"=>accept,
+      "Content Length:"=>content_length
+    }
   end
 
   def verb
-    request_lines[0].split[0]
+    verb = request_lines.detect { |line| line.include?("HTTP") }
+    verb.split[0]
   end
 
   def path
-   request_lines[0].split[1].split("?")[0]
+    path = request_lines.detect { |line| line.include?("HTTP") }
+    path.split[1].split("?")[0]
   end
 
   def param_name
@@ -40,7 +45,8 @@ class Parser
   end
 
   def protocol
-    request_lines[0].split[2]
+    protocol = request_lines.detect { |line| line.include?("HTTP") }
+    protocol.split[2]
   end
 
   def host
@@ -61,6 +67,13 @@ class Parser
   def accept
     accept = request_lines.detect { |line| line.include?("Accept:") }
     accept.split(":")[1].strip
+  end
+
+  def content_length
+    if request_lines.include?("Content Length:")
+      content_length = request_lines.detect { |line| line.include?("Content-Length:") }
+      content_length.split(":")[1].strip.to_i
+    end
   end
 
 end
