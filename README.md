@@ -7,6 +7,7 @@ In this project we'll begin to introduce HTTP, the protocol that runs the web, a
 ***
 
 * [HTTP Original Spec](https://github.com/turingschool/curriculum/blob/master/source/projects/http_yeah_you_know_me.markdown)
+
 ***
 
 ##### Pair Project: Garrett Smestad & Kris Sparks
