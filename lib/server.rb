@@ -28,7 +28,7 @@ class Server
 
   def route_request_lines(request_lines)
     got_request(request_lines)
-    parser            = Parser.new(request_lines)
+    parser             = Parser.new(request_lines)
     @parser_output     = parser.parser_output
     user_guess = client.read(request_lines[3].split(":")[1].strip.to_i)
     @parser_output["Content Length:"] = (user_guess)
@@ -43,7 +43,7 @@ class Server
 
   def headers(output)
     # binding.pry
-    if @parser_output.value?("/game")
+    if @parser_output.values_at("Verb:", "Path:") == ["POST", "/game"]
       ["http/1.1 302 Found",
       "location: http://127.0.0.1:9292/game",
       "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}",
