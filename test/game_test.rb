@@ -24,7 +24,7 @@ class GameTest < Minitest::Test
     game.answer = 45
     game.guess(45)
 
-    assert_equal "Your guess was 45 and it was correct!", game.check_guess
+    assert_equal "Your guess was 45, and it was correct!", game.check_guess
   end
 
   def test_it_evaluates_a_low_guess
@@ -32,7 +32,7 @@ class GameTest < Minitest::Test
     game.answer = 45
     game.guess(10)
 
-    assert_equal "Your guess was 10 and it was too low.", game.check_guess
+    assert_equal "Your guess was 10, and it was too low.", game.check_guess
   end
 
   def test_it_evaluates_a_high_guess
@@ -40,7 +40,7 @@ class GameTest < Minitest::Test
     game.answer = 45
     game.guess(70)
 
-    assert_equal "Your guess was 70 and it was too high.", game.check_guess
+    assert_equal "Your guess was 70, and it was too high.", game.check_guess
   end
 
   def test_it_starts_with_0_guesses
@@ -63,7 +63,7 @@ class GameTest < Minitest::Test
     game.guess(6)
     game.guess(27)
 
-    expected = "2 guess(es) have been taken. Your guess was 27 and it was too high."
+    expected = "2 guess(es) have been taken. Your guess was 27, and it was too high."
     assert_equal 2, game.guesses.count
     assert_equal expected, game.game_info
   end

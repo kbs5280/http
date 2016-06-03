@@ -35,14 +35,6 @@ class ResponseTest < Minitest::Test
     assert_equal expected_2, response.response_generator(input)
   end
 
-  def test_it_can_send_datetime_response #NEED TO TEST TIME
-    skip
-    input = ({"Verb:"=>"GET", "Path:"=>"/datetime"})
-    expected = date&time
-
-    assert_equal expected, response.response_generator(input)
-  end
-
   def test_it_can_get_a_correct_word_search_response
     input = {"Param Value:" => "pizza"}
 
@@ -91,16 +83,6 @@ class ResponseTest < Minitest::Test
     input_2 = ({"Verb:"=>"GET", "Path:"=>"/game"})
     expected = "Good luck!"
     expected_2 = "No guesses have been made."
-
-    assert_equal expected, response.start_game(input)
-    assert_equal expected_2, response.response_generator(input_2)
-  end
-
-  def test_it_plays_game
-    input = ({"Verb:"=>"POST", "Path:"=>"/start_game"})
-    input_2 = ({"Verb:"=>"POST", "Path:"=>"/game", "Param Name:"=> "guess", "Param Value:"=>"42"})
-    expected = "Good luck!"
-    expected_2 = "Your guess was 42 and it was too high."
 
     assert_equal expected, response.start_game(input)
     assert_equal expected_2, response.response_generator(input_2)
