@@ -75,7 +75,7 @@ class Response
   def game_play(input)
     guess = input["Content Length:"]
     @game.guess(guess)
-    @game.check_guess
+    nil
   end
 
 end

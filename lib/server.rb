@@ -4,14 +4,14 @@ require_relative 'parser'
 require_relative 'response'
 
 class Server
-  attr_reader :client, :parser, :response, :running, :guess, :location
+  attr_reader :client, :parser, :response, :running, :guess
 
   def initialize
     tcp_server  = TCPServer.new(9292)
     @client     = tcp_server.accept
     @response   = Response.new
     @running  = true
-    @location = "Pizza"
+    @parser_output
   end
 
   def ready_for_request
@@ -29,10 +29,10 @@ class Server
   def route_request_lines(request_lines)
     got_request(request_lines)
     parser            = Parser.new(request_lines)
-    parser_output     = parser.parser_output
+    @parser_output     = parser.parser_output
     user_guess = client.read(request_lines[3].split(":")[1].strip.to_i)
-    parser_output["Content Length:"] = (user_guess)
-    output_to_client  = response.response_generator(parser_output)
+    @parser_output["Content Length:"] = (user_guess)
+    output_to_client  = response.response_generator(@parser_output)
     sending_response(output_to_client)
   end
 
@@ -42,12 +42,21 @@ class Server
   end
 
   def headers(output)
-    ["http/1.1 200 ok",
-    "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}",
-    "location: #{location}"
-    "server: ruby",
-    "content-type: text/html; charset=iso-8859-1",
-    "content-length: #{output.length}\r\n\r\n"].join("\r\n")
+    # binding.pry
+    if @parser_output.value?("/game")
+      ["http/1.1 302 Found",
+      "location: http://127.0.0.1:9292/game",
+      "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}",
+      "server: ruby",
+      "content-type: text/html; charset=iso-8859-1",
+      "content-length: #{output.length}\r\n\r\n"].join("\r\n")
+    else
+      ["http/1.1 200 ok",
+      "date: #{Time.now.strftime('%a, %e %b %Y %H:%M:%S %z')}",
+      "server: ruby",
+      "content-type: text/html; charset=iso-8859-1",
+      "content-length: #{output.length}\r\n\r\n"].join("\r\n")
+      end
   end
 
   def sending_response(response)
