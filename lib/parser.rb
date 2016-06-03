@@ -1,5 +1,3 @@
-require_relative 'server'
-
 class Parser
   attr_reader :request_lines
 

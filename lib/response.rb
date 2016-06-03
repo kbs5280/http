@@ -1,5 +1,3 @@
-require_relative 'parser'
-require_relative 'server'
 require_relative 'dictionary'
 require_relative 'game'
 
